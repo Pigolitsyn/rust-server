@@ -1,10 +1,18 @@
-use std::borrow::Cow;
-use rocket::serde::{Serialize, Deserialize};
-use rocket::serde::uuid::Uuid;
+use crate::schema::user;
+use uuid::Uuid;
 
-#[derive(Serialize, Deserialize)]
-#[serde(crate = "rocket::serde")]
-pub struct User<'a> {
-    pub id: Option<Uuid>,
-    pub email: Cow<'a, str>
+#[derive(Queryable)]
+pub struct User {
+    pub id: Uuid,
+    pub email: String,
+    pub hash: String
 }
+
+
+#[derive(Insertable)]
+#[table_name="user"]
+pub struct NewUser<'a> {
+    pub email: &'a str,
+    pub hash: &'a str
+}
+

@@ -7,4 +7,6 @@ edition = "2021"
 
 [dependencies]
 rocket = { version = "0.5.0-rc.2", features = ["json", "uuid"] }
-
+diesel = { version = "1.4.4", features = ["postgres", "uuidv07"] }
+dotenv = "0.15.0"
+uuid = { version = "0.8.2", features = ["serde", "v4"] }
