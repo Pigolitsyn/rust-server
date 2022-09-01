@@ -2,6 +2,9 @@ use rocket::serde::json::Json;
 
 use crate::entities::{post::{Post}, user::User};
 
+// #[post("/create")]
+// async fn create_post() -> Ok()
+
 #[get("/get-all")]
 async fn get_posts() -> Json<Vec<Post<'static>>> {
     Json(vec![])

@@ -1,24 +1,20 @@
 use crate::connection::{establish_connection};
 use crate::diesel::insert_into;
-use crate::entities::user::User;
-use diesel::{RunQueryDsl};
+use crate::entities::user::{User, NewUser};
+use diesel::{RunQueryDsl, sql_query};
 use diesel::prelude::*;
-use uuid::Uuid;
-use crate::schema::user;
+use crate::schema::user::{self, id};
 
-pub fn create_user() {
-
+pub fn create_user(newUser: NewUser) {
     let conn = establish_connection();
+
     insert_into(user::table)
-        .default_values()
-        .execute(&conn);
+    .values(newUser)
+    .execute(&conn);
 }
 
-pub fn find_user(id: Uuid) -> User {
+pub fn find_user(user_id: uuid::Uuid) -> Result<User, diesel::result::Error> {
     let conn = establish_connection();
-    
-    match user::table.find(id).get_result::<User>(&conn) {
-        Ok(usr) => return usr,
-        Err(e) => todo!()
-    }
+
+    user::table.filter(id.eq_all(user_id)).first::<User>(&conn)
 }
