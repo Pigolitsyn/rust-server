@@ -10,4 +10,5 @@ rocket = { version = "0.5.0-rc.2", features = ["json", "uuid"] }
 uuid = { version = "0.8.2", features = ["serde", "v4"] }
 diesel = { version = "1.4.5", features = ["postgres", "chrono", "postgres", "r2d2", "uuidv07", "uuid"] }
 dotenv = "0.15.0"
-sha3 = "*"
+argon2 = "0.4"
+rand_core = { version = "0.6", features = ["std"] }

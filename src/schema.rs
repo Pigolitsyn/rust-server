@@ -12,6 +12,8 @@ table! {
         id -> Uuid,
         email -> Varchar,
         hash -> Varchar,
+        username -> Varchar,
+        avatar_url -> Varchar,
     }
 }
 

@@ -1,5 +1,6 @@
-use Sha3::sha3_256;
-
-pub fn hasher(password: &String) -> String {
-
+pub fn convert_rocket_uuid_to_uuid(source: rocket::serde::uuid::Uuid) -> uuid::Uuid {
+    match uuid::Uuid::parse_str(&source.to_string()) {
+        Ok(source) => return source,
+        Err(err) => panic!("{} was happened", err)
+    }
 }

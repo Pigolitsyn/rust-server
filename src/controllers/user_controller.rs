@@ -1,17 +1,16 @@
 use rocket::serde::json::Json;
 use rocket::serde::uuid::Uuid;
 
-use crate::{services::user_service::find_user, entities::user::User};
+use crate::{services::user_service::{find_user, create_user}, entities::user::{NewUser, UserDto}, utilities::convert_rocket_uuid_to_uuid};
 
-fn convert_rocket_uuid_to_uuid(source: rocket::serde::uuid::Uuid) -> uuid::Uuid {
-    match uuid::Uuid::parse_str(&source.to_string()) {
-        Ok(source) => return source,
-        Err(err) => panic!("{} was happened", err)
-    }
+#[post("/create-user", data = "<user>")]
+async fn post_user(user: Json<NewUser<'_>>) {
+    let user = user.0;
+    create_user(user);
 }
 
 #[get("/get-user/<id>")]
-async fn get_user(id: Uuid) -> Result<Json<User>, String> {
+async fn get_user(id: Uuid) -> Result<Json<UserDto>, String> {
     let converted_id = convert_rocket_uuid_to_uuid(id);
     match find_user(converted_id) {
         Ok(user) => return Ok(Json(user)),
@@ -21,12 +20,6 @@ async fn get_user(id: Uuid) -> Result<Json<User>, String> {
 
 pub fn user_controller() -> rocket::fairing::AdHoc {
     rocket::fairing::AdHoc::on_ignite("user_controller", |rocket| async {
-        rocket.mount("/user-controller", routes![get_user])
+        rocket.mount("/user-controller", routes![get_user, post_user])
     })
-}
-
-pub fn auth_controller() -> rocket::fairing::AdHoc {
-    rocket::fairing::AdHoc::on_request("user_controller", |req, _| Box::pin(async {
-        
-    }))
 }

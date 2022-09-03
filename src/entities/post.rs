@@ -2,8 +2,6 @@ use std::borrow::Cow;
 use rocket::serde::{Serialize, Deserialize};
 use rocket::serde::uuid::Uuid;
 
-use super::user::User;
-
 #[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(crate = "rocket::serde")]
 pub struct Post<'a> {
