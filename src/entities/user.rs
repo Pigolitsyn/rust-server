@@ -27,7 +27,7 @@ pub struct UserIdentity {
 pub struct UserDto {
     pub id: uuid::Uuid,
     pub email: String,
+    pub hash: String,
     pub username: String,
     pub avatar_url: String,
-    pub hash: String
 }

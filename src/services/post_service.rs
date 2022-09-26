@@ -1,5 +1,11 @@
 use diesel::insert_into;
+use crate::entities::post::NewPost;
+use crate::schema::post;
+use crate::diesel::RunQueryDsl;
 
-// pub fn create_post() {
-//     insert_into(post::table)
-// }
+use crate::{entities::post::Post, connection::establish_connection};
+
+pub fn create_post<'a>(new_post: NewPost<'a>) {
+    let conn = establish_connection();
+
+}
